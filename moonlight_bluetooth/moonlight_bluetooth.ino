@@ -33,9 +33,6 @@ SoftwareSerial bluetooth(BT_RXD, BT_TXD);
 
 // Bluetooth 제어 모드 on/off
 bool blue_flag = false;
-
-const char *monthName[12] = {"Jan", "Feb", "Mar", "Apr", "May", "Jun",
-  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
   
 // 센서 설정
 DHT dht(DHTPIN, DHTTYPE);
@@ -67,36 +64,6 @@ String alt2digits(int number) {
     num = String(number);
   }
   return num;
-}
-
-
-bool getTime(const char *str)
-{
-  int Hour, Min, Sec;
-
-  if (sscanf(str, "%d:%d:%d", &Hour, &Min, &Sec) != 3) return false;
-  tm.Hour = Hour;
-  tm.Minute = Min;
-  tm.Second = Sec;
-  return true;
-}
-
-
-bool getDate(const char *str)
-{
-  char Month[12];
-  int Day, Year;
-  uint8_t monthIndex; // unsigned char 0~255 의 값
-  
-  if (sscanf(str, "%s %d %d", Month, &Day, &Year) != 3) return false; // sscanf는 변수 갯수를 return
-  for (monthIndex = 0; monthIndex < 12; monthIndex++) {
-    if (strcmp(Month, monthName[monthIndex]) == 0) break;
-  }
-  if (monthIndex >= 12) return false;
-  tm.Day = Day;
-  tm.Month = monthIndex + 1; // 숫자로 저장해야 됨
-  tm.Year = CalendarYrToTm(Year);
-  return true;
 }
 
 void ShowAllPixels(uint32_t color){
@@ -140,11 +107,6 @@ void setup() {
   lcd.backlight(); // I2C LCD의 백라이트를 켬
 
   pinMode(Backlight, OUTPUT);
-
-  // __DATE__: 컴파일 된 날짜, __TIME__: 컴파일 된 시간을 RTC 모듈에 저장
-  getDate(__DATE__);
-  getTime(__TIME__);
-  RTC.write(tm);
 
   pixels.begin(); // neopixel strip 초기화  
 }

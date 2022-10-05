@@ -21,9 +21,6 @@ int neo_R = 250;
 int neo_G = 120;
 int neo_B = 50;
 
-
-const char *monthName[12] = {"Jan", "Feb", "Mar", "Apr", "May", "Jun",
-  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
   
 // 센서 설정
 DHT dht(DHTPIN, DHTTYPE);
@@ -47,36 +44,6 @@ String alt2digits(int number) {
     num = String(number);
   }
   return num;
-}
-
-
-bool getTime(const char *str)
-{
-  int Hour, Min, Sec;
-
-  if (sscanf(str, "%d:%d:%d", &Hour, &Min, &Sec) != 3) return false;
-  tm.Hour = Hour;
-  tm.Minute = Min;
-  tm.Second = Sec;
-  return true;
-}
-
-
-bool getDate(const char *str)
-{
-  char Month[12];
-  int Day, Year;
-  uint8_t monthIndex; // unsigned char 0~255 의 값
-  
-  if (sscanf(str, "%s %d %d", Month, &Day, &Year) != 3) return false; // sscanf는 변수 갯수를 return
-  for (monthIndex = 0; monthIndex < 12; monthIndex++) {
-    if (strcmp(Month, monthName[monthIndex]) == 0) break;
-  }
-  if (monthIndex >= 12) return false;
-  tm.Day = Day;
-  tm.Month = monthIndex + 1; // 숫자로 저장해야 됨
-  tm.Year = CalendarYrToTm(Year);
-  return true;
 }
 
 void ShowAllPixels(uint32_t color){
