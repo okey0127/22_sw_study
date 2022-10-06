@@ -174,8 +174,9 @@ void loop() {
    S = alt2digits(tm.Second);
    String Year = String(tmYearToCalendar(tm.Year)).substring(2,4);
    String Mon = alt2digits(tm.Month);
+   String Day = alt2digits(tm.Day);
    lcd.setCursor(1, 0); // 첫째줄에 한칸 띄워 작성
-   lcd.print(Year); lcd.print('/'); lcd.print(Mon); lcd.print('/'); lcd.print(tm.Day); lcd.print(' ');
+   lcd.print(Year); lcd.print('/'); lcd.print(Mon); lcd.print('/'); lcd.print(Day); lcd.print(' ');
    lcd.print(H);  lcd.print(':'); lcd.print(M); 
    RTC_flag = true;
   }

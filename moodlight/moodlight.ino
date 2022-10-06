@@ -61,11 +61,6 @@ void setup() {
 
   pinMode(Backlight, OUTPUT);
 
-  // __DATE__: 컴파일 된 날짜, __TIME__: 컴파일 된 시간을 RTC 모듈에 저장
-  getDate(__DATE__);
-  getTime(__TIME__);
-  RTC.write(tm);
-
   pixels.begin(); // neopixel strip 초기화
 
 }
