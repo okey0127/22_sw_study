@@ -6,6 +6,11 @@
 #ifdef __AVR__
   #include <avr/power.h>
 #endif
+#include <Thread.h>
+#include <ThreadController.h>
+
+Thread NeoThread = Thread(); // Thread* Thread2 = new Thread(); < 포인터로 선언
+ThreadController controller = ThreadController();
 
 // 변수 선언
 #define DHTPIN 2 // int DHTPIN = 2;
@@ -17,9 +22,9 @@
 #define NEOPIXELS 8 
 
 // NeoPixels R, G, B 값
-int neo_R = 250;
-int neo_G = 120;
-int neo_B = 50;
+int Neo_R = 255;
+int Neo_G = 0;
+int Neo_B = 0;
 
   
 // 센서 설정
@@ -52,6 +57,23 @@ void ShowAllPixels(uint32_t color){
   }
 }
 
+void RainbowNeo(){
+  if (Neo_R == 255 && Neo_G < 255){
+    Neo_G++;
+  }
+  else if (Neo_R > 0 && Neo_G == 255){
+    Neo_R--;
+  }
+  else if (Neo_G == 255 && Neo_B < 255){
+    Neo_B++;
+  }
+  else if ( Neo_G > 0 && Neo_B == 255){
+    Neo_G--;
+  }
+  else if (Neo_R < 255 && Neo_B == 255){
+    Neo_R++;
+  }
+}
 void setup() {
   Serial.begin(9600); // 시리얼 모니터와 9600의 보드레이트로 통신(1초당 신호 전송 속도)
   dht.begin();
@@ -61,22 +83,25 @@ void setup() {
 
   pinMode(Backlight, OUTPUT);
 
-  pixels.begin(); // neopixel strip 초기화
-
+  pixels.begin(); // Neopixel strip 초기화
+  
+  NeoThread.setInterval(100); // 실행 간격 설정
+  NeoThread.onRun(RainbowNeo);
+  controller.add(&NeoThread);
 }
 
 bool RTC_flag = false;
 
 void loop() {
-  delay(1000); // 1초 기다림(ms 단위)
-
+  //delay(1000); // 1초 기다림(ms 단위)
+  controller.run();
   float hum = dht.readHumidity();
   float temp = dht.readTemperature(); // parameter에 True를 넘기면 화씨로 나옴
 
   String H, M, S;
 
   pixels.show();
-  ShowAllPixels(pixels.Color(neo_R, neo_G, neo_B));
+  ShowAllPixels(pixels.Color(Neo_R, Neo_G, Neo_B));
   
   if (RTC.read(tm)) {
    H = alt2digits(tm.Hour);
@@ -84,8 +109,9 @@ void loop() {
    S = alt2digits(tm.Second);
    String Year = String(tmYearToCalendar(tm.Year)).substring(2,4);
    String Mon = alt2digits(tm.Month);
+   String Day = alt2digits(tm.Day);
    lcd.setCursor(1, 0); // 첫째줄에 한칸 띄워 작성
-   lcd.print(Year); lcd.print('/'); lcd.print(Mon); lcd.print('/'); lcd.print(tm.Day); lcd.print(' ');
+   lcd.print(Year); lcd.print('/'); lcd.print(Mon); lcd.print('/'); lcd.print(Day); lcd.print(' ');
    lcd.print(H);  lcd.print(':'); lcd.print(M); 
    RTC_flag = true;
   }
@@ -99,7 +125,7 @@ void loop() {
     }
    else{
     analogWrite(Backlight, 15);
-    pixels.setBrightness(2);
+    pixels.setBrightness(20);
    }
   }
   
@@ -109,5 +135,5 @@ void loop() {
   }
   lcd.setCursor(0, 1); // 둘째줄에 작성
   lcd.print(hum); lcd.print("% | "); lcd.print(temp); lcd.print("'C");
-
+  
 }

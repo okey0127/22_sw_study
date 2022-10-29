@@ -78,21 +78,25 @@ void ShowAllPixels(uint32_t color){
 }
 
 void RainbowNeo(){
-  if (neo_R == 255 && neo_G < 255){
-    neo_G++;
-  }
-  else if (neo_R > 0 && neo_G == 255){
-    neo_R--;
-  }
-  else if (neo_G == 255 && neo_B < 255){
-    neo_B++;
-  }
-  else if (neo_G > 0 && neo_B == 255){
-    neo_G--;
-  }
-  else if (neo_R < 255 && neo_B == 255){
-    neo_R++;
-  }
+    if (neo_R == 255 && neo_G < 255 && neo_B == 0){
+      neo_G++;
+    }
+    else if (neo_R > 0 && neo_G == 255){
+      neo_R--;
+    }
+    else if (neo_G == 255 && neo_B < 255){
+      neo_B++;
+    }
+    else if ( neo_G > 0 && neo_B == 255){
+      neo_G--;
+    }
+    else if (neo_R < 255 && neo_B == 255){
+      neo_R++;
+    }
+    else if (neo_R == 255 && neo_B > 0){
+      neo_B--;
+    }
+    else{}
 }
 
 void setup() {

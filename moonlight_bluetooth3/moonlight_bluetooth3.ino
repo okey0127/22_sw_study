@@ -72,6 +72,29 @@ void ShowAllPixels(uint32_t color){
   }
 }
 
+void RainbowNeo(){
+  
+    if (neo_R == 255 && neo_G < 255 && neo_B == 0){
+      neo_G+=5;
+    }
+    else if (neo_R > 0 && neo_G == 255){
+      neo_R-=5;
+    }
+    else if (neo_G == 255 && neo_B < 255){
+      neo_B+=5;
+    }
+    else if ( neo_G > 0 && neo_B == 255){
+      neo_G-=5;
+    }
+    else if (neo_R < 255 && neo_B == 255){
+      neo_R+=5;
+    }
+    else if (neo_R == 255 && neo_B > 0){
+      neo_B-=5;
+    }
+    else{}
+    Serial.print(neo_R); Serial.print(neo_G); Serial.println(neo_B);
+}
 
 void setup() {
   Serial.begin(9600); // 시리얼 모니터와 9600의 보드레이트로 통신(1초당 신호 전송 속도)
@@ -90,11 +113,11 @@ void setup() {
     lcd_night = 10;
     // NeoPixels 밝기
     neo_day = 10;
-    neo_night = 2;
+    neo_night = 20;
     // NeoPixels R, G, B 값
-    neo_R = 250;
-    neo_G = 120;
-    neo_B = 50;
+    neo_R = 255;
+    neo_G = 0;
+    neo_B = 0;
   }
   
   dht.begin();
@@ -111,7 +134,7 @@ bool RTC_flag = false;
 
 void loop() {
   //delay(1000); // 1초 기다림(ms 단위)
-
+  
   float hum = dht.readHumidity();
   float temp = dht.readTemperature(); // parameter에 True를 넘기면 화씨로 나옴
 
@@ -119,6 +142,7 @@ void loop() {
 
   pixels.show();
   ShowAllPixels(pixels.Color(neo_R, neo_G, neo_B));
+  RainbowNeo();
   
   if (bluetooth.available())
   {
