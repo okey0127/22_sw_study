@@ -18,7 +18,6 @@ void ShowAllPixels(uint32_t color){
     pixels.setPixelColor(i, color);
   }
 }
-
 void setup() {
   pixels.begin(); // neopixel strip 초기화
 }
@@ -27,29 +26,20 @@ void loop() {
   pixels.show();
   pixels.setBrightness(100);
   ShowAllPixels(pixels.Color(Neo_R, Neo_G, Neo_B));
-  if (Neo_R == 255 && Neo_G < 255 && Neo_B == 0){
+  if (Neo_R == 255 && Neo_G < 255){
     Neo_G++;
-    delay(50);
   }
   else if (Neo_R > 0 && Neo_G == 255){
     Neo_R--;
-    delay(50);
   }
   else if (Neo_G == 255 && Neo_B < 255){
     Neo_B++;
-    delay(50);
   }
   else if ( Neo_G > 0 && Neo_B == 255){
     Neo_G--;
-    delay(50);
   }
   else if (Neo_R < 255 && Neo_B == 255){
     Neo_R++;
-    delay(50);
   }
-  else if (Neo_R == 255 && Neo_B > 255){
-    Neo_B--;
-    delay(50);
-  }
-  
+  delay(50);
 }
