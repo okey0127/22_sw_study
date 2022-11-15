@@ -17,10 +17,8 @@
 #define NEOPIXELS 8 
 
 // NeoPixels R, G, B 값
-int Neo_R = 255;
-int Neo_G = 0;
-int Neo_B = 0;
-
+int Neo_RGB[3] = [255, 0, 0];
+int pivot = 0;
   
 // 센서 설정
 DHT dht(DHTPIN, DHTTYPE);
@@ -53,20 +51,24 @@ void ShowAllPixels(uint32_t color){
 }
 
 void RainbowNeo(){
-  if (Neo_R == 255 && Neo_G < 255){
-    Neo_G++;
+  int index1 = pivot + 1;
+  if (index > 2){
+    index = 0;
   }
-  else if (Neo_R > 0 && Neo_G == 255){
-    Neo_R--;
+
+  if (Neo_RGB[index] < 255){
+    Neo_RGB[index]++;
   }
-  else if (Neo_G == 255 && Neo_B < 255){
-    Neo_B++;
-  }
-  else if ( Neo_G > 0 && Neo_B == 255){
-    Neo_G--;
-  }
-  else if (Neo_R < 255 && Neo_B == 255){
-    Neo_R++;
+  else{ // Neo_RGB[index] == 255 인 경우
+    if (Neo_RGB[pivot]>0){ // 1. Neo_RGB[pivot] > 0 이면 0까지 줄인다.
+      Neo_RGB[pivot]--;
+    }
+    else{ // 2. pivot을 바꾼다. pivot이 2보다 크면 0으로 
+      pivot++;
+      if (pivot>2){
+        pivot = 0;
+      }
+    } 
   }
 }
 void setup() {
@@ -90,8 +92,8 @@ void loop() {
   String H, M, S;
 
   pixels.show();
-  ShowAllPixels(pixels.Color(Neo_R, Neo_G, Neo_B));
-  RainbowNeo()
+  ShowAllPixels(pixels.Color(Neo_RGB[0], Neo_RGB[1], Neo_RGB[2]));
+  RainbowNeo();
   if (RTC.read(tm)) {
    H = alt2digits(tm.Hour);
    M = alt2digits(tm.Minute);
