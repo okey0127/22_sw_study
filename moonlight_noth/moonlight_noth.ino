@@ -51,10 +51,7 @@ void ShowAllPixels(uint32_t color){
 }
 
 void RainbowNeo(){
-  int index1 = pivot + 1;
-  if (index > 2){
-    index = 0;
-  }
+  int index1 = (pivot + 1) % 3;
 
   if (Neo_RGB[index] < 255){
     Neo_RGB[index]++;
@@ -64,10 +61,7 @@ void RainbowNeo(){
       Neo_RGB[pivot]--;
     }
     else{ // 2. pivot을 바꾼다. pivot이 2보다 크면 0으로 
-      pivot++;
-      if (pivot>2){
-        pivot = 0;
-      }
+      pivot = (pivot+1) % 3;
     } 
   }
 }
