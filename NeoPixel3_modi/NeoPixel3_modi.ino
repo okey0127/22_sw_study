@@ -26,7 +26,7 @@ void loop() {
   ShowAllPixels(pixels.Color(Neo_RGB[0], Neo_RGB[1], Neo_RGB[2]));
   
   // 아래는 무지개색을 표현하는 코드
-  int index1 = (pivot + 1) % 3;
+  int index = (pivot + 1) % 3;
 
   if (Neo_RGB[index] < 255){
     Neo_RGB[index]++;
