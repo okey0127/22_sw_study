@@ -17,7 +17,7 @@
 #define NEOPIXELS 8 
 
 // NeoPixels R, G, B 값
-int Neo_RGB[3] = [255, 0, 0];
+int Neo_RGB[3] = {255, 0, 0};
 int pivot = 0;
   
 // 센서 설정
@@ -51,7 +51,7 @@ void ShowAllPixels(uint32_t color){
 }
 
 void RainbowNeo(){
-  int index1 = (pivot + 1) % 3;
+  int index = (pivot + 1) % 3;
 
   if (Neo_RGB[index] < 255){
     Neo_RGB[index]++;

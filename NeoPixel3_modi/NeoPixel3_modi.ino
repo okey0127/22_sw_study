@@ -7,7 +7,7 @@
 // 네오픽셀 갯수(8개)
 #define NEOPIXELS 8 
 
-int Neo_RGB[3] = [255, 0, 0];
+int Neo_RGB[3] = {255, 0, 0};
 int pivot = 0;
 Adafruit_NeoPixel pixels(NEOPIXELS, Neo, NEO_GRB + NEO_KHZ800);
 
