@@ -80,7 +80,7 @@ void setup() {
 
   pixels.begin(); // Neopixel strip 초기화
 
-  p_time = millis();
+  int p_time = millis();
 }
 
 bool RTC_flag = false;
@@ -133,7 +133,7 @@ void loop() {
   /////////////////////////////////////////////////////////////
 
   ////////////////////// Neopixel의 반복 동작 //////////////////
-  c_time = millis(); // 시간 측정
+  int c_time = millis(); // 시간 측정
   int diff = c_time - p_time; // 이전에 측정된 시간과 위에서 측정된 시간 차이[ms]
   if (diff >= 50){ // 50ms에 한번 조건문 실행
     p_time = c_time; // 이전 시간 갱신
