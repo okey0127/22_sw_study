@@ -99,7 +99,6 @@ void loop() {
   lcd.print(hum); lcd.print("% | "); lcd.print(temp); lcd.print("'C");
 
   pixels.show();
-  ShowAllPixels(pixels.Color(Neo_RGB[0], Neo_RGB[1], Neo_RGB[2]));
   
   String H, M, S;
 
@@ -116,6 +115,7 @@ void loop() {
    lcd.print(H);  lcd.print(':'); lcd.print(M); 
   }
   
+  ShowAllPixels(pixels.Color(Neo_RGB[0], Neo_RGB[1], Neo_RGB[2]));
   ////RTC가 작동하는 경우 시간에 따라 pixel과 Backlight 조절////
   if (RTC.read(tm)) {
     int Hour;
