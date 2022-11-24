@@ -80,7 +80,7 @@ void setup() {
 
   pixels.begin(); // Neopixel strip 초기화
 
-  int p_time = millis();
+  p_time = millis();
 }
 
 bool RTC_flag = false;
@@ -129,6 +129,10 @@ void loop() {
     analogWrite(Backlight, 15);
     pixels.setBrightness(20);
    }
+  }
+  else{
+    analogWrite(Backlight, 120);
+    pixels.setBrightness(120);
   }
   /////////////////////////////////////////////////////////////
 
